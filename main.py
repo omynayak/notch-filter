@@ -29,21 +29,15 @@ for n in range(1,10):
     fft_data[indices_to_remove] = 0
 
 
+
 # Plotting the new graph: 
 
-# N = len(data)
-# frequencies = np.fft.fftfreq(N, 1/samplingRate)
-# magnitude = np.abs(fft_data)
-# positive_frequencies = frequencies[:N//2]
-# positive_magnitude = magnitude[:N//2]
+N = len(data)
+frequencies = np.fft.fftfreq(N, 1/samplingRate)
+magnitude = np.abs(fft_data)
+positive_frequencies = frequencies[:N//2]
+positive_magnitude = magnitude[:N//2]
 
-# plt.figure(figsize=(12, 6))
-# plt.plot(positive_frequencies, positive_magnitude)
-# plt.title("Frequency Spectrum of the Audio Signal")
-# plt.xlabel("Frequency (Hz)")
-# plt.ylabel("Magnitude")
-# plt.grid(True)
-# plt.show()
 
 
 reconstructed_audio = np.fft.ifft(fft_data)
