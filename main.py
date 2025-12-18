@@ -43,9 +43,13 @@ positive_magnitude = magnitude[:N//2]
 reconstructed_audio = np.fft.ifft(fft_data)
 reconstructed_audio = np.real(reconstructed_audio)
 
-max_original_val = np.iinfo(original_dtype).max
-reconstructed_audio = np.interp(reconstructed_audio, (reconstructed_audio.min(), reconstructed_audio.max()), (-max_original_val, max_original_val))
-reconstructed_audio = reconstructed_audio.astype(original_dtype)
+if np.issubdtype(original_dtype, np.integer):
+    max_val = np.iinfo(original_dtype).max
+    reconstructed_audio = np.clip(reconstructed_audio, -1.0, 1.0)
+    reconstructed_audio = (reconstructed_audio * max_val).astype(original_dtype)
+else:
+    reconstructed_audio = reconstructed_audio.astype(original_dtype)
+
 
 wavfile.write("cleaned_audio.wav", samplingRate, reconstructed_audio)
 
